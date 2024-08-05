@@ -13,11 +13,6 @@ const createCard = (title, imageUrl) => {
   cardImage.alt = title;
   cardTitle.textContent = title;
 
-  // Добавление обработчика для кнопки удаления
-  deleteButton.addEventListener('click', () => {
-    cardElement.remove();
-  });
-
   return cardElement;
 };
 

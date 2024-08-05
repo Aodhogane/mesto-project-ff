@@ -28,7 +28,6 @@ const displayCards = (cards) => {
 const initialCards = [
   { title: 'Карточка 1', imageUrl: './images/card1.jpg' },
   { title: 'Карточка 2', imageUrl: './images/card2.jpg' },
-  { title: 'Карточка 3', imageUrl: './images/card3.jpg'},
   { title: 'Карточка 3', imageUrl: './images/card3.jpg'}
 ];
 

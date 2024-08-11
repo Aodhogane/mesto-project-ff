@@ -34,4 +34,5 @@ function renderCards(cardArray) {
     });
 }
 
+// Вызов функции для вывода карточек на страницу
 renderCards(initialCards);

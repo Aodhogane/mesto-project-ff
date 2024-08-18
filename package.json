@@ -1,43 +1,23 @@
 {
-  "name": "mesto-project-ff",
+  "name": "my-project",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo 'Привет!'",
-    "check": "prettier --check './src/**/*.{html,css,js}'",
-    "format": "prettier --write './src/**/*.{html,css,js}'",
-    "lint": "stylelint './src/**/*.css'",
-    "lintfix": "stylelint './src/**/*.css' --fix",
-    "checkAll": "npm run check && npm run lint",
-    "fixAll": "npm run format && npm run lintfix",
-    "build": "gulp build",
-    "dev": "gulp",
-    "fixAndBuild": "npm run fixAll && npm run build",
-    "lintfixAndPush": "npm run fixAll && git add . && git commit -m 'подготовили к публикации' && git push"
+    "start": "webpack serve --open",
+    "build": "webpack"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "autoprefixer": "^10.4.14",
-    "browser-sync": "^2.29.1",
-    "cssnano": "^6.0.1",
-    "del": "^6.0.0",
-    "gulp": "^4.0.2",
-    "gulp-concat-css": "^3.1.0",
-    "gulp-plumber": "^1.2.1",
-    "gulp-postcss": "^9.0.1",
-    "html-minifier": "^4.0.0",
-    "postcss": "^8.4.23",
-    "postcss-combine-media-query": "^1.0.1",
-    "prettier": "^2.8.7",
-    "stylelint": "^15.4.0"
+    "css-loader": "^6.11.0",
+    "mini-css-extract-plugin": "^2.0.0",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.0.0",
+    "webpack-cli": "^4.0.0",
+    "webpack-dev-server": "^4.0.0"
   },
-  "browserslist": [
-    "last 5 versions"
-  ],
   "dependencies": {
-    "mesto-project-ff": "file:",
-    "zakrivayuschiy-teg-f-main": "file:"
+    "my-project": "file:"
   }
 }

@@ -1,3 +1,7 @@
+    
+   import './pages/index.css'; // Импорт CSS файла
+   import './scripts/cards.js';
+   
    // @todo: DOM узлы
    const cardTemplate = document.querySelector('#card-template').content.querySelector('.card');
    const placesList = document.querySelector('.places__list');
@@ -36,6 +40,3 @@
 
    // Вызов функции для вывода карточек на страницу
    renderCards(initialCards);
- 
-   import './pages/index.css'; // Импорт CSS файла
-   import './scripts/cards.js';

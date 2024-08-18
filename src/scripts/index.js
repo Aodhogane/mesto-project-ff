@@ -1,4 +1,8 @@
-// @todo: DOM узлы
+    
+   import '../pages/index.css'; // Импорт CSS файла
+   import './cards.js';
+   
+   // @todo: DOM узлы
 const cardTemplate = document.querySelector('#card-template').content.querySelector('.card');
 const placesList = document.querySelector('.places__list');
 

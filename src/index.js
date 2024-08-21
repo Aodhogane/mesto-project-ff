@@ -44,12 +44,21 @@ function openImagePopup(link, name) {
   popupImageCaption.textContent = name;
   popupImage.classList.add('popup_is-opened');
   popupImage.classList.remove('popup_is-animated');
+  document.addEventListener('keydown', handleEscClose);
 }
 
 // @todo: Функция закрытия попапа
 function closeImagePopup() {
   popupImage.classList.add('popup_is-animated');
   popupImage.classList.remove('popup_is-opened');
+  document.removeEventListener('keydown', handleEscClose);
+}
+
+// @todo: Функция закрытия попапа по нажатию на Esc
+function handleEscClose(event) {
+  if (event.key === 'Escape') {
+    closeImagePopup();
+  }
 }
 
 // @todo: Вывести карточки на страницу

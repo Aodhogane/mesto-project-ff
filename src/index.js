@@ -1,5 +1,3 @@
-// index.js
-
 import './pages/index.css';
 import { initialCards } from './scripts/cards.js';
 import { createCard, deleteCard } from './components/card.js';

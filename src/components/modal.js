@@ -1,5 +1,3 @@
-// modal.js
-
 const popupImage = document.querySelector('.popup_type_image');
 const popupImageContent = popupImage.querySelector('.popup__image');
 const popupImageCaption = popupImage.querySelector('.popup__caption');

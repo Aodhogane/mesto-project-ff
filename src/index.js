@@ -17,8 +17,11 @@ const popupImageCaption = popupImage.querySelector('.popup__caption');
 const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
 const popupEditForm = popupEdit.querySelector('.popup__form');
+const popupAddForm = popupAdd.querySelector('.popup__form');
 const popupNameInput = popupEdit.querySelector('.popup__input_type_name');
 const popupDescriptionInput = popupEdit.querySelector('.popup__input_type_description');
+const popupCardNameInput = popupAdd.querySelector('.popup__input_type_card-name');
+const popupCardLinkInput = popupAdd.querySelector('.popup__input_type_url');
 
 // Функция рендеринга карточек
 function renderCards() {
@@ -57,6 +60,22 @@ function handleEditFormSubmit(event) {
   closePopup(popupEdit);
 }
 
+// Функция добавления новой карточки
+function handleAddFormSubmit(event) {
+  event.preventDefault();
+
+  const cardData = {
+    name: popupCardNameInput.value,
+    link: popupCardLinkInput.value
+  };
+
+  const cardElement = createCard(cardData, deleteCard, openImagePopup);
+  placesList.prepend(cardElement); // Добавляем новую карточку в начало списка
+
+  popupAddForm.reset(); // Очищаем форму
+  closePopup(popupAdd); // Закрываем попап
+}
+
 // Обработчики событий
 popupImageCloseButton.addEventListener('click', closeImagePopup);
 popupImage.addEventListener('click', (event) => {
@@ -72,6 +91,7 @@ popupEditCloseButton.addEventListener('click', () => closePopup(popupEdit));
 popupAddCloseButton.addEventListener('click', () => closePopup(popupAdd));
 
 popupEditForm.addEventListener('submit', handleEditFormSubmit);
+popupAddForm.addEventListener('submit', handleAddFormSubmit);
 
 [popupEdit, popupAdd].forEach(popup => {
   popup.addEventListener('click', (event) => {

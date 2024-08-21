@@ -9,6 +9,16 @@ const popupImageContent = popupImage.querySelector('.popup__image');
 const popupImageCaption = popupImage.querySelector('.popup__caption');
 const popupCloseButton = popupImage.querySelector('.popup__close');
 
+// Получаем кнопки "Редактировать" и "+"
+const editButton = document.querySelector('.profile__edit-button');
+const addButton = document.querySelector('.profile__add-button');
+
+// Получаем попапы
+const popupEdit = document.querySelector('.popup_type_edit');
+const popupAdd = document.querySelector('.popup_type_new-card');
+const popupEditCloseButton = popupEdit.querySelector('.popup__close');
+const popupAddCloseButton = popupAdd.querySelector('.popup__close');
+
 // @todo: Функция создания карточки
 function createCard(cardData, deleteCallback) {
   const cardElement = cardTemplate.cloneNode(true);
@@ -54,10 +64,27 @@ function closeImagePopup() {
   document.removeEventListener('keydown', handleEscClose);
 }
 
+// @todo: Функция открытия попапа
+function openPopup(popup) {
+  popup.classList.add('popup_is-opened');
+  popup.classList.remove('popup_is-animated');
+  document.addEventListener('keydown', handleEscClose);
+}
+
+// @todo: Функция закрытия попапа
+function closePopup(popup) {
+  popup.classList.add('popup_is-animated');
+  popup.classList.remove('popup_is-opened');
+  document.removeEventListener('keydown', handleEscClose);
+}
+
 // @todo: Функция закрытия попапа по нажатию на Esc
 function handleEscClose(event) {
   if (event.key === 'Escape') {
-    closeImagePopup();
+    const openedPopup = document.querySelector('.popup_is-opened');
+    if (openedPopup) {
+      closePopup(openedPopup);
+    }
   }
 }
 
@@ -72,12 +99,32 @@ function renderCards() {
 // Вызов функции для вывода карточек на страницу
 renderCards();
 
-// Добавление обработчика события для закрытия попапа
+// Добавление обработчиков событий для закрытия попапа
 popupCloseButton.addEventListener('click', closeImagePopup);
 
 // Закрытие попапа при нажатии на пустое пространство вокруг изображения
 popupImage.addEventListener('click', (event) => {
   if (event.target === popupImage) {
     closeImagePopup();
+  }
+});
+
+// Добавление обработчиков событий для открытия других попапов
+editButton.addEventListener('click', () => openPopup(popupEdit));
+addButton.addEventListener('click', () => openPopup(popupAdd));
+
+// Добавление обработчиков событий для закрытия других попапов
+popupEditCloseButton.addEventListener('click', () => closePopup(popupEdit));
+popupAddCloseButton.addEventListener('click', () => closePopup(popupAdd));
+
+popupEdit.addEventListener('click', (event) => {
+  if (event.target === popupEdit) {
+    closePopup(popupEdit);
+  }
+});
+
+popupAdd.addEventListener('click', (event) => {
+  if (event.target === popupAdd) {
+    closePopup(popupAdd);
   }
 });

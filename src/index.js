@@ -25,6 +25,7 @@ function createCard(cardData, deleteCallback) {
 
   const cardImage = cardElement.querySelector('.card__image');
   const cardTitle = cardElement.querySelector('.card__title');
+  const likeButton = cardElement.querySelector('.card__like-button'); // Добавляем кнопку лайка
 
   cardImage.src = cardData.link;
   cardImage.alt = cardData.name;
@@ -39,12 +40,17 @@ function createCard(cardData, deleteCallback) {
     openImagePopup(cardData.link, cardData.name);
   });
 
+  // Добавляем обработчик события для кнопки лайка
+  likeButton.addEventListener('click', function () {
+    likeButton.classList.toggle('card__like-button_is-active');
+  });
+
   return cardElement;
 }
 
 // @todo: Функция удаления карточки
 function deleteCard(cardElement) {
-    cardElement.remove();
+  cardElement.remove();
 }
 
 // @todo: Функция открытия попапа с изображением

@@ -3,6 +3,7 @@ import { initialCards } from './scripts/cards.js';
 import { createCard, deleteCard } from './components/card.js';
 import { openPopup, closePopup } from './components/modal.js';
 
+// Получение элементов DOM
 const placesList = document.querySelector('.places__list');
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
@@ -45,11 +46,6 @@ function openImagePopup(link, name) {
   openPopup(popupImage);
 }
 
-// Функция закрытия попапа изображения
-function closeImagePopup() {
-  closePopup(popupImage);
-}
-
 // Функция открытия попапа редактирования профиля
 function openEditPopup() {
   popupNameInput.value = profileTitle.textContent;
@@ -61,7 +57,7 @@ function openEditPopup() {
 function handleEditFormSubmit(event) {
   event.preventDefault();
   profileTitle.textContent = popupNameInput.value;
-  profileDescription.textContent = popupDescriptionInput.value;
+  profileDescriptionInput.textContent = popupDescriptionInput.value;
   closePopup(popupEdit);
 }
 
@@ -81,13 +77,16 @@ function handleAddFormSubmit(event) {
   closePopup(popupAdd); // Закрываем попап
 }
 
-// Обработчики событий
-popupImageCloseButton.addEventListener('click', closeImagePopup);
-popupImage.addEventListener('click', (event) => {
+// Общая функция для закрытия попапа при клике вне его содержимого
+function handleOverlayClick(event, popup) {
   if (event.target === event.currentTarget) {
-    closeImagePopup();
+    closePopup(popup);
   }
-});
+}
+
+// Обработчики событий для кнопок закрытия и клика вне попапа
+popupImageCloseButton.addEventListener('click', () => closePopup(popupImage));
+popupImage.addEventListener('click', (event) => handleOverlayClick(event, popupImage));
 
 editButton.addEventListener('click', openEditPopup);
 addButton.addEventListener('click', () => openPopup(popupAdd));
@@ -99,9 +98,5 @@ popupEditForm.addEventListener('submit', handleEditFormSubmit);
 popupAddForm.addEventListener('submit', handleAddFormSubmit);
 
 [popupEdit, popupAdd].forEach(popup => {
-  popup.addEventListener('click', (event) => {
-    if (event.target === event.currentTarget) {
-      closePopup(popup);
-    }
-  });
+  popup.addEventListener('click', (event) => handleOverlayClick(event, popup));
 });

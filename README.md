@@ -7,7 +7,7 @@
 Для yстановки зависимости: npm install
 
 Как Bыглядет сборка проекта:
-![alt text](image.png)
+![alt text](photo_for_vrtification/image.png)
 
 
 https://github.com/Aodhogane/mesto-project-ff/tree/main

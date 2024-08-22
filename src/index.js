@@ -23,10 +23,15 @@ const popupDescriptionInput = popupEdit.querySelector('.popup__input_type_descri
 const popupCardNameInput = popupAdd.querySelector('.popup__input_type_card-name');
 const popupCardLinkInput = popupAdd.querySelector('.popup__input_type_url');
 
+// Функция обработки лайка
+function handleLikeButton(likeButton) {
+  likeButton.classList.toggle('card__like-button_is-active');
+}
+
 // Функция рендеринга карточек
 function renderCards() {
   initialCards.forEach((cardData) => {
-    const cardElement = createCard(cardData, deleteCard, openImagePopup);
+    const cardElement = createCard(cardData, deleteCard, openImagePopup, handleLikeButton);
     placesList.appendChild(cardElement);
   });
 }
@@ -69,7 +74,7 @@ function handleAddFormSubmit(event) {
     link: popupCardLinkInput.value
   };
 
-  const cardElement = createCard(cardData, deleteCard, openImagePopup);
+  const cardElement = createCard(cardData, deleteCard, openImagePopup, handleLikeButton);
   placesList.prepend(cardElement); // Добавляем новую карточку в начало списка
 
   popupAddForm.reset(); // Очищаем форму

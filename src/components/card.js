@@ -1,7 +1,7 @@
 const cardTemplate = document.querySelector('#card-template').content.querySelector(".card");
 
 // Функция создания карточки
-function createCard(cardData, deleteCallback, openImagePopupCallback) {
+function createCard(cardData, deleteCallback, openImagePopupCallback, likeCallback) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardImage = cardElement.querySelector('.card__image');
   const cardTitle = cardElement.querySelector('.card__title');
@@ -20,7 +20,7 @@ function createCard(cardData, deleteCallback, openImagePopupCallback) {
   });
 
   likeButton.addEventListener('click', function () {
-    likeButton.classList.toggle('card__like-button_is-active');
+    likeCallback(likeButton);
   });
 
   return cardElement;

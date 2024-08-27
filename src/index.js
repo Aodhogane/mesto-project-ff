@@ -1,6 +1,6 @@
 import './pages/index.css';
 import { initialCards } from './scripts/cards.js';
-import { createCard, deleteCard } from './components/card.js';
+import { createCard, deleteCard, handleLikeButton } from './components/card.js';
 import { openPopup, closePopup } from './components/modal.js';
 
 const placesList = document.querySelector('.places__list'),
@@ -23,16 +23,13 @@ const placesList = document.querySelector('.places__list'),
       popupCardNameInput = popupAdd.querySelector('.popup__input_type_card-name'),
       popupCardLinkInput = popupAdd.querySelector('.popup__input_type_url');
 
-function handleLikeButton(likeButton) {
-  likeButton.classList.toggle('card__like-button_is-active');
-}
-
 function renderCards() {
   initialCards.forEach(cardData => {
     const cardElement = createCard(cardData, deleteCard, openImagePopup, handleLikeButton);
     placesList.appendChild(cardElement);
   });
 }
+
 renderCards();
 
 function openImagePopup(link, name) {
@@ -51,7 +48,7 @@ function openEditPopup() {
 function handleEditFormSubmit(event) {
   event.preventDefault();
   profileTitle.textContent = popupNameInput.value;
-  profileDescription.textContent = popupDescriptionInput.value;
+  profileDescription.textContent = popupDescriptionInput.value; // Исправлено здесь
   closePopup(popupEdit);
 }
 

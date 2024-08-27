@@ -14,8 +14,8 @@ function createCard(cardData, deleteCallback, openImagePopupCallback, likeCallba
   return cardElement;
 }
 
-function deleteCard(cardElement) {
-  cardElement.remove();
-}
+function deleteCard(cardElement) {cardElement.remove();}
 
-export { createCard, deleteCard };
+function handleLikeButton(likeButton) {likeButton.classList.toggle('card__like-button_is-active');}
+
+export { createCard, deleteCard, handleLikeButton };

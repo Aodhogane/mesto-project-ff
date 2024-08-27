@@ -13,9 +13,6 @@ function createCard(cardData, deleteCallback, openImagePopupCallback, likeCallba
   likeButton.addEventListener('click', () => likeCallback(likeButton));
   return cardElement;
 }
-
 function deleteCard(cardElement) {cardElement.remove();}
-
 function handleLikeButton(likeButton) {likeButton.classList.toggle('card__like-button_is-active');}
-
 export { createCard, deleteCard, handleLikeButton };

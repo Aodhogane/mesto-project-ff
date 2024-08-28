@@ -16,11 +16,12 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: { loader: 'babel-loader' }
+        use: { loader: 'babel-loader'}
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
+        use: [MiniCssExtractPlugin.loader, {loader: 'css-loader',},
+          'postcss-loader']
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/,

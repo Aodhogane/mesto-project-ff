@@ -2,6 +2,7 @@ import './pages/index.css';
 import { initialCards } from './scripts/cards.js';
 import { createCard, deleteCard, handleLikeButton } from './components/card.js';
 import { openPopup, closePopup } from './components/modal.js';
+import './components/validations.js'; // Импортируем скрипт валидации
 
 const placesList = document.querySelector('.places__list'),
       editButton = document.querySelector('.profile__edit-button'),

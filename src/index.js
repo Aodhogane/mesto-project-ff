@@ -48,9 +48,23 @@ function openEditPopup() {
 
 function handleEditFormSubmit(event) {
   event.preventDefault();
-  profileTitle.textContent = popupNameInput.value;
-  profileDescription.textContent = popupDescriptionInput.value; // Исправлено здесь
-  closePopup(popupEdit);
+  
+  // Проверка валидности полей
+  const isNameValid = checkInputValidity(popupNameInput, document.getElementById('name-error'), /^[A-Za-zА-Яа-яЁё\s-]+$/, 
+    'В поле «Имя» должно быть от 2 до 40 символов.', 
+    'Поле «Имя» может содержать только латинские и кириллические буквы, знаки дефиса и пробелы.', 
+    'Поле «Имя» не должно быть пустым.');
+
+  const isDescriptionValid = checkInputValidity(popupDescriptionInput, document.getElementById('description-error'), /^[A-Za-zА-Яа-яЁё\s-]+$/, 
+    'В поле «О себе» должно быть от 2 до 200 символов.', 
+    'Поле «О себе» может содержать только латинские и кириллические буквы, знаки дефиса и пробелы.', 
+    'Поле «О себе» не должно быть пустым.');
+
+  if (isNameValid && isDescriptionValid) {
+    profileTitle.textContent = popupNameInput.value;
+    profileDescription.textContent = popupDescriptionInput.value;
+    closePopup(popupEdit);
+  }
 }
 
 function handleAddFormSubmit(event) {
@@ -78,3 +92,33 @@ popupAddCloseButton.addEventListener('click', () => closePopup(popupAdd));
 popupEditForm.addEventListener('submit', handleEditFormSubmit);
 popupAddForm.addEventListener('submit', handleAddFormSubmit);
 [popupEdit, popupAdd].forEach(popup => popup.addEventListener('click', event => handleOverlayClick(event, popup)));
+
+// Функция валидации
+function checkInputValidity(input, errorElement, pattern, lengthMessage, patternMessage, emptyMessage) {
+  if (input.value.trim() === '') {
+    showInputError(input, errorElement, emptyMessage);
+    return false;
+  } else if (input.value.length < 2 || input.value.length > 40) {
+    showInputError(input, errorElement, lengthMessage);
+    return false;
+  } else if (!input.value.match(pattern)) {
+    showInputError(input, errorElement, patternMessage);
+    return false;
+  } else {
+    hideInputError(input, errorElement);
+    return true;
+  }
+}
+
+// Функции показа и скрытия ошибок
+function showInputError(input, errorElement, message) {
+  input.classList.add('popup__input_invalid');
+  errorElement.textContent = message;
+  errorElement.style.display = 'block';
+}
+
+function hideInputError(input, errorElement) {
+  input.classList.remove('popup__input_invalid');
+  errorElement.textContent = '';
+  errorElement.style.display = 'none';
+}

@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const nameError = document.getElementById('name-error');
     const descriptionError = document.getElementById('description-error');
     
-    const namePattern = /^[A-Za-zА-Яа-яЁё\s-]{2,40}$/;
-    const descriptionPattern = /^[A-Za-zА-Яа-яЁё\s-]{2,200}$/;
+    const namePattern = /^[A-Za-zА-Яа-яЁё\s-]+$/;
+    const descriptionPattern = /^[A-Za-zА-Яа-яЁё\s-]+$/;
   
     // Проверка на существование элементов
     if (!form || !nameInput || !descriptionInput || !nameError || !descriptionError) {
@@ -26,22 +26,34 @@ document.addEventListener("DOMContentLoaded", function() {
       errorElement.style.display = 'none';
     }
   
-    function checkInputValidity(input, errorElement, pattern, lengthMessage, patternMessage) {
-      if (input.value.length < 2 || input.value.length > 40) {
+    function checkInputValidity(input, errorElement, pattern, lengthMessage, patternMessage, emptyMessage) {
+      if (input.value.trim() === '') {
+        showInputError(input, errorElement, emptyMessage);
+        return false;
+      } else if (input.value.length < 2 || input.value.length > 40) {
         showInputError(input, errorElement, lengthMessage);
+        return false;
       } else if (!input.value.match(pattern)) {
         showInputError(input, errorElement, patternMessage);
+        return false;
       } else {
         hideInputError(input, errorElement);
+        return true;
       }
     }
   
     function handleFormSubmit(event) {
       event.preventDefault();
-      checkInputValidity(nameInput, nameError, namePattern, 'В поле «Имя» должно быть от 2 до 40 символов.', 'Поле «Имя» может содержать только латинские и кириллические буквы, знаки дефиса и пробелы.');
-      checkInputValidity(descriptionInput, descriptionError, descriptionPattern, 'В поле «О себе» должно быть от 2 до 200 символов.', 'Поле «О себе» может содержать только латинские и кириллические буквы, знаки дефиса и пробелы.');
+      const isNameValid = checkInputValidity(nameInput, nameError, namePattern, 
+        'В поле «Имя» должно быть от 2 до 40 символов.', 
+        'Поле «Имя» может содержать только латинские и кириллические буквы, знаки дефиса и пробелы.', 
+        'Поле «Имя» не должно быть пустым.');
+      const isDescriptionValid = checkInputValidity(descriptionInput, descriptionError, descriptionPattern, 
+        'В поле «О себе» должно быть от 2 до 200 символов.', 
+        'Поле «О себе» может содержать только латинские и кириллические буквы, знаки дефиса и пробелы.', 
+        'Поле «О себе» не должно быть пустым.');
   
-      if (nameInput.validity.valid && descriptionInput.validity.valid) {
+      if (isNameValid && isDescriptionValid) {
         const profileTitle = document.querySelector('.profile__title');
         const profileDescription = document.querySelector('.profile__description');
         if (profileTitle && profileDescription) {
@@ -61,8 +73,14 @@ document.addEventListener("DOMContentLoaded", function() {
       form.reset();
     }
   
-    nameInput.addEventListener('input', () => checkInputValidity(nameInput, nameError, namePattern, 'В поле «Имя» должно быть от 2 до 40 символов.', 'Поле «Имя» может содержать только латинские и кириллические буквы, знаки дефиса и пробелы.'));
-    descriptionInput.addEventListener('input', () => checkInputValidity(descriptionInput, descriptionError, descriptionPattern, 'В поле «О себе» должно быть от 2 до 200 символов.', 'Поле «О себе» может содержать только латинские и кириллические буквы, знаки дефиса и пробелы.'));
+    nameInput.addEventListener('input', () => checkInputValidity(nameInput, nameError, namePattern, 
+        'В поле «Имя» должно быть от 2 до 40 символов.', 
+        'Поле «Имя» может содержать только латинские и кириллические буквы, знаки дефиса и пробелы.', 
+        'Поле «Имя» не должно быть пустым.'));
+    descriptionInput.addEventListener('input', () => checkInputValidity(descriptionInput, descriptionError, 
+        descriptionPattern, 'В поле «О себе» должно быть от 2 до 200 символов.', 
+        'Поле «О себе» может содержать только латинские и кириллические буквы, знаки дефиса и пробелы.', 
+        'Поле «О себе» не должно быть пустым.'));
     form.addEventListener('submit', handleFormSubmit);
   
     document.querySelectorAll('.popup__close').forEach(button => {

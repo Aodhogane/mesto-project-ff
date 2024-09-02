@@ -21,3 +21,21 @@
   right: 0;
   z-index: 10;
 }
+
+/* Стили для текста ошибок */
+.popup__error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  display: none; /* По умолчанию скрываем ошибки */
+}
+
+/* Показываем ошибки, когда поле не валидно */
+.popup__input_invalid + .popup__error {
+  display: block;
+}
+
+/* Стили для поля ввода при ошибке */
+.popup__input_invalid {
+  border-bottom: 2px solid red; /* Нижняя линия красится в красный цвет */
+}

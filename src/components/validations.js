@@ -26,9 +26,11 @@ document.addEventListener("DOMContentLoaded", function() {
       errorElement.style.display = 'none';
     }
   
-    function checkInputValidity(input, errorElement, pattern) {
-      if (!input.value.match(pattern)) {
-        showInputError(input, errorElement, input.validationMessage);
+    function checkInputValidity(input, errorElement, pattern, lengthMessage, patternMessage) {
+      if (input.value.length < 2 || input.value.length > 40) {
+        showInputError(input, errorElement, lengthMessage);
+      } else if (!input.value.match(pattern)) {
+        showInputError(input, errorElement, patternMessage);
       } else {
         hideInputError(input, errorElement);
       }
@@ -36,8 +38,8 @@ document.addEventListener("DOMContentLoaded", function() {
   
     function handleFormSubmit(event) {
       event.preventDefault();
-      checkInputValidity(nameInput, nameError, namePattern);
-      checkInputValidity(descriptionInput, descriptionError, descriptionPattern);
+      checkInputValidity(nameInput, nameError, namePattern, 'В поле «Имя» должно быть от 2 до 40 символов.', 'Поле «Имя» может содержать только латинские и кириллические буквы, знаки дефиса и пробелы.');
+      checkInputValidity(descriptionInput, descriptionError, descriptionPattern, 'В поле «О себе» должно быть от 2 до 200 символов.', 'Поле «О себе» может содержать только латинские и кириллические буквы, знаки дефиса и пробелы.');
   
       if (nameInput.validity.valid && descriptionInput.validity.valid) {
         const profileTitle = document.querySelector('.profile__title');
@@ -59,8 +61,8 @@ document.addEventListener("DOMContentLoaded", function() {
       form.reset();
     }
   
-    nameInput.addEventListener('input', () => checkInputValidity(nameInput, nameError, namePattern));
-    descriptionInput.addEventListener('input', () => checkInputValidity(descriptionInput, descriptionError, descriptionPattern));
+    nameInput.addEventListener('input', () => checkInputValidity(nameInput, nameError, namePattern, 'В поле «Имя» должно быть от 2 до 40 символов.', 'Поле «Имя» может содержать только латинские и кириллические буквы, знаки дефиса и пробелы.'));
+    descriptionInput.addEventListener('input', () => checkInputValidity(descriptionInput, descriptionError, descriptionPattern, 'В поле «О себе» должно быть от 2 до 200 символов.', 'Поле «О себе» может содержать только латинские и кириллические буквы, знаки дефиса и пробелы.'));
     form.addEventListener('submit', handleFormSubmit);
   
     document.querySelectorAll('.popup__close').forEach(button => {
@@ -104,4 +106,3 @@ document.addEventListener("DOMContentLoaded", function() {
       if (openedPopup) closePopup(openedPopup);
     }
   }
-  

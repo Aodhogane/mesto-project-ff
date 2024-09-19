@@ -22,7 +22,8 @@ const placesList = document.querySelector('.places__list'),
       popupNameInput = popupEdit.querySelector('.popup__input_type_name'),
       popupDescriptionInput = popupEdit.querySelector('.popup__input_type_description'),
       popupCardNameInput = popupAdd.querySelector('.popup__input_type_card-name'),
-      popupCardLinkInput = popupAdd.querySelector('.popup__input_type_url');
+      popupCardLinkInput = popupAdd.querySelector('.popup__input_type_url'),
+      fetchCards = require('./components/api.js');
 
 function renderCards() {
   initialCards.forEach(cardData => {
@@ -122,3 +123,5 @@ function hideInputError(input, errorElement) {
   errorElement.textContent = '';
   errorElement.style.display = 'none';
 }
+
+fetchCards();

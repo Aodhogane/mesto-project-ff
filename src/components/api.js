@@ -116,3 +116,19 @@ const updateAvatar = async (avatar) => {
     console.error(error);
   }
 };
+
+export const getInitialCards = async () => {
+  try {
+    const response = await fetch(`${config.baseUrl}/cards`, {
+      headers: config.headers
+    });
+    if (response.ok) { // проверяем, что ответ от сервера успешен
+      return response.json();
+    } else {
+      throw new Error(`Ошибка: ${response.status}`); // если ответ не успешен, генерируем ошибку
+    }
+  } catch (error) {
+    console.error(error); // если произошла ошибка, выводим ее в консоль
+  }
+};
+	

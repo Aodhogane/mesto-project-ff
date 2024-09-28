@@ -1,134 +1,90 @@
 const COHORT_ID = 'pw-cohort-1';
 const TOKEN = '53eddcf0-49ba-4c02-bfb7-93b2e1be6776';
 
-const fetchUserInfo = async () => {
-  try {
-    const response = await fetch(`https://nomoreparties.co/v1/${COHORT_ID}/users/me`, {
-      headers: {
-        authorization: TOKEN
-      }
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
+const config = {
+  baseUrl: `https://nomoreparties.co/v1/${COHORT_ID}`,
+  headers: {
+    authorization: TOKEN,
+    'Content-Type': 'application/json'
   }
+}
+
+const handleResponse = res => {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Ошибка: ${res.status}`);
 };
 
-const fetchCards = async () => {
-  try {
-    const response = await fetch(`https://nomoreparties.co/v1/${COHORT_ID}/cards`, {
-      headers: {
-        authorization: TOKEN
-      }
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-};
+export function getUserData() {
+  return fetch(`${config.baseUrl}/users/me`, {
+    headers: config.headers
+  })
+   .then(res => handleResponse(res));
+}
 
-const editProfile = async (name, about) => {
-  try {
-    const url = `https://nomoreparties.co/v1/${COHORT_ID}/users/me`;
-    const headers = {
-      authorization: TOKEN,
-      'Content-Type': 'application/json'
-    };
-    const body = JSON.stringify({ name, about });
-    const response = await fetch(url, { method: 'PATCH', headers, body });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-	
-const addCard = async (name, link) => {
-  try {
-    const url = `https://nomoreparties.co/v1/${COHORT_ID}/cards`;
-    const headers = {
-      authorization: TOKEN,
-      'Content-Type': 'application/json'
-    };
-    const body = JSON.stringify({ name, link });
-    const response = await fetch(url, { method: 'POST', headers, body });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-};
+export function getCardsArray() {
+  return fetch(`${config.baseUrl}/cards`, {
+    headers: config.headers
+  })
+   .then(res => handleResponse(res));
+}
 
-const renderCardLikes = (card) => {
-  const likesCount = card.likes.length;
-  const likesElement = document.createElement('span');
-  likesElement.textContent = `${likesCount} лайков`;
-  return likesElement;
-};
+export function sendUserData(userData) {
+  return fetch(`${config.baseUrl}/users/me`, {
+    method: 'PATCH',
+    headers: config.headers,
+    body: JSON.stringify({
+      name: userData.name,
+      about: userData.about
+    })
+  })
+   .then(res => handleResponse(res));
+}
 
-const deleteCard = async (cardId) => {
-  try {
-    const url = `https://nomoreparties.co/v1/${COHORT_ID}/cards/${cardId}`;
-    const response = await fetch(url, { method: 'DELETE', headers: { authorization: TOKEN } });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-};
+export function sendCardData(cardData) {
+  return fetch(`${config.baseUrl}/cards`, {
+    method: 'POST',
+    headers: config.headers,
+    body: JSON.stringify({
+      name: cardData.name,
+      link: cardData.link
+    })
+  })
+   .then(res => handleResponse(res));
+}
 
-const likeCard = async (cardId) => {
-  try {
-    const url = `https://nomoreparties.co/v1/${COHORT_ID}/cards/likes/${cardId}`;
-    const response = await fetch(url, { method: 'PUT', headers: { authorization: TOKEN } });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-};
+export function deleteCardRequest(cardId) {
+  return fetch(`${config.baseUrl}/cards/` + cardId, {
+    method: 'DELETE',
+    headers: config.headers,
+  })
+   .then(res => handleResponse(res));
+}
 
-const dislikeCard = async (cardId) => {
-  try {
-    const url = `https://nomoreparties.co/v1/${COHORT_ID}/cards/likes/${cardId}`;
-    const response = await fetch(url, { method: 'DELETE', headers: { authorization: TOKEN } });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-};
+export function addLikeRequest(cardId) {
+  return fetch(`${config.baseUrl}/cards/likes/` + cardId, {
+    method: 'PUT',
+    headers: config.headers,
+  })
+   .then(res => handleResponse(res));
+}
 
-const updateAvatar = async (avatar) => {
-  try {
-    const url = `https://nomoreparties.co/v1/${COHORT_ID}/users/me/avatar`;
-    const headers = {
-      authorization: TOKEN,
-      'Content-Type': 'application/json'
-    };
-    const body = JSON.stringify({ avatar });
-    const response = await fetch(url, { method: 'PATCH', headers, body });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-};
+export function deleteLikeRequest(cardId) {
+  return fetch(`${config.baseUrl}/cards/likes/` + cardId, {
+    method: 'DELETE',
+    headers: config.headers,
+  })
+   .then(res => handleResponse(res));
+}
 
-export const getInitialCards = async () => {
-  try {
-    const response = await fetch(`${config.baseUrl}/cards`, {
-      headers: config.headers
-    });
-    if (response.ok) { // проверяем, что ответ от сервера успешен
-      return response.json();
-    } else {
-      throw new Error(`Ошибка: ${response.status}`); // если ответ не успешен, генерируем ошибку
-    }
-  } catch (error) {
-    console.error(error); // если произошла ошибка, выводим ее в консоль
-  }
-};
-	
+export function changeUserAvatar(avatarUrl) {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
+    method: 'PATCH',
+    headers: config.headers,
+    body: JSON.stringify({
+      avatar: avatarUrl,
+    })
+  })
+   .then(res => handleResponse(res));
+}

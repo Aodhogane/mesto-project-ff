@@ -7,7 +7,7 @@ const config = {
     authorization: TOKEN,
     'Content-Type': 'application/json'
   }
-}
+};
 
 const handleResponse = res => {
   if (res.ok) {
@@ -55,7 +55,7 @@ export function sendCardData(cardData) {
 }
 
 export function deleteCardRequest(cardId) {
-  return fetch(`${config.baseUrl}/cards/` + cardId, {
+  return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: 'DELETE',
     headers: config.headers,
   })
@@ -63,7 +63,7 @@ export function deleteCardRequest(cardId) {
 }
 
 export function addLikeRequest(cardId) {
-  return fetch(`${config.baseUrl}/cards/likes/` + cardId, {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: 'PUT',
     headers: config.headers,
   })
@@ -71,7 +71,7 @@ export function addLikeRequest(cardId) {
 }
 
 export function deleteLikeRequest(cardId) {
-  return fetch(`${config.baseUrl}/cards/likes/` + cardId, {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: 'DELETE',
     headers: config.headers,
   })

@@ -1,11 +1,11 @@
 const COHORT_ID = 'pw-cohort-1';
 const TOKEN = '53eddcf0-49ba-4c02-bfb7-93b2e1be6776';
 
-const getUserProfile = async () => {
+const fetchUserInfo = async () => {
   try {
-    const response = await fetch(`https://nomoreparties.co/v1/${COHORT_ID}/users/me`, { 
-      headers: { 
-        authorization: TOKEN 
+    const response = await fetch(`https://nomoreparties.co/v1/${COHORT_ID}/users/me`, {
+      headers: {
+        authorization: TOKEN
       }
     });
     const data = await response.json();
@@ -15,7 +15,7 @@ const getUserProfile = async () => {
   }
 };
 
-const getInitialCards = async () => {
+const fetchCards = async () => {
   try {
     const response = await fetch(`https://nomoreparties.co/v1/${COHORT_ID}/cards`, {
       headers: {
@@ -29,7 +29,7 @@ const getInitialCards = async () => {
   }
 };
 
-const updateUserProfile = async (name, about) => {
+const editProfile = async (name, about) => {
   try {
     const url = `https://nomoreparties.co/v1/${COHORT_ID}/users/me`;
     const headers = {
@@ -45,7 +45,7 @@ const updateUserProfile = async (name, about) => {
   }
 };
 	
-const createNewCard = async (name, link) => {
+const addCard = async (name, link) => {
   try {
     const url = `https://nomoreparties.co/v1/${COHORT_ID}/cards`;
     const headers = {
@@ -68,7 +68,7 @@ const renderCardLikes = (card) => {
   return likesElement;
 };
 
-const removeCard = async (cardId) => {
+const deleteCard = async (cardId) => {
   try {
     const url = `https://nomoreparties.co/v1/${COHORT_ID}/cards/${cardId}`;
     const response = await fetch(url, { method: 'DELETE', headers: { authorization: TOKEN } });
@@ -79,7 +79,7 @@ const removeCard = async (cardId) => {
   }
 };
 
-const addLikeToCard = async (cardId) => {
+const likeCard = async (cardId) => {
   try {
     const url = `https://nomoreparties.co/v1/${COHORT_ID}/cards/likes/${cardId}`;
     const response = await fetch(url, { method: 'PUT', headers: { authorization: TOKEN } });
@@ -90,7 +90,7 @@ const addLikeToCard = async (cardId) => {
   }
 };
 
-const removeLikeFromCard = async (cardId) => {
+const dislikeCard = async (cardId) => {
   try {
     const url = `https://nomoreparties.co/v1/${COHORT_ID}/cards/likes/${cardId}`;
     const response = await fetch(url, { method: 'DELETE', headers: { authorization: TOKEN } });
@@ -101,14 +101,14 @@ const removeLikeFromCard = async (cardId) => {
   }
 };
 
-const updateProfileAvatar = async (avatarUrl) => {
+const updateAvatar = async (avatar) => {
   try {
     const url = `https://nomoreparties.co/v1/${COHORT_ID}/users/me/avatar`;
     const headers = {
       authorization: TOKEN,
       'Content-Type': 'application/json'
     };
-    const body = JSON.stringify({ avatar: avatarUrl });
+    const body = JSON.stringify({ avatar });
     const response = await fetch(url, { method: 'PATCH', headers, body });
     const data = await response.json();
     return data;
@@ -117,13 +117,18 @@ const updateProfileAvatar = async (avatarUrl) => {
   }
 };
 
-export { 
-  getUserProfile, 
-  getInitialCards, 
-  updateUserProfile, 
-  createNewCard, 
-  removeCard, 
-  addLikeToCard, 
-  removeLikeFromCard, 
-  updateProfileAvatar 
+export const getInitialCards = async () => {
+  try {
+    const response = await fetch(`${config.baseUrl}/cards`, {
+      headers: config.headers
+    });
+    if (response.ok) { // проверяем, что ответ от сервера успешен
+      return response.json();
+    } else {
+      throw new Error(`Ошибка: ${response.status}`); // если ответ не успешен, генерируем ошибку
+    }
+  } catch (error) {
+    console.error(error); // если произошла ошибка, выводим ее в консоль
+  }
 };
+	

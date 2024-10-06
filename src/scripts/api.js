@@ -1,7 +1,7 @@
 const config = {
 	baseUrl: 'https://nomoreparties.co/v1/pwff-cohort-1',
 	headers: {
-		authorization: '5baf78f7-af76-4c15-9381-f1f4ae1be00d',
+		authorization: '53eddcf0-49ba-4c02-bfb7-93b2e1be6776',
 		'Content-Type': 'application/json'
 	}
 }

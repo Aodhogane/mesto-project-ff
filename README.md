@@ -11,3 +11,6 @@
 ![alt text](photo_for_vrtification/image1.png)
 
 https://github.com/Aodhogane/mesto-project-ff/tree/main
+
+Deploy проект:
+https://aodhogane.github.io/mesto-project-ff/
